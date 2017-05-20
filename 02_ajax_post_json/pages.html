@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+                        <style>
+                            table { border-collapse: collapse;}
+                            td { padding: 10px; }
+                        
+                        </style>
+
+
+</head>
+<body>
+    <div id="personne">Laura</div>
+    <div id="resultat"></div>
+    <button type="button" id="button" onclick="ajax()">Consultez</button>
+
+
+    <script>
+        function ajax(){
+            var file  ="ajax.php";
+            r = new XMLHttpRequest();
+            var personne = document.getElementById("personne");
+            personne = personne.innerHTML;
+            //console.log(personne);
+            var parametres = "prenom="+personne;// comme en get
+
+            r.open("POST", file, true);
+            r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            // la methode setRequestHeader definit ala valeur de d un header http
+            //appeler cette methode entre open et send
+
+            r.onreadystatechange = function(){
+
+                if(r.readyState == 4 && r.status == 200){
+                    console.log(r.responseText)
+                     var obj = JSON.parse(r.responseText);
+                     // la methode parse de l objet json permet d evaluer  la reponse  et resultat est l indice resultat du php
+
+                     document.getElementById('resultat').innerHTML = obj.resultat;
+                }
+            }
+            r.send(parametres);// envoi, il enclenche un changement d etat et active r.onreadystatechange 
+
+
+        }
+    
+    
+    </script>
+</body>
+</html>

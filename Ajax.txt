@@ -1,0 +1,13 @@
+Asynchronous
+Javascript
+And
+Xml
+
+Changer les donnees sans recharger les pages
+
+JSON
+Javascript
+Objet
+Notation
+
+On parle de AJAJ

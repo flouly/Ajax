@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form id="inscription">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" value="">
+        <input type="submit" value="S inscrire"     >
+
+    </form>
+    <hr>
+    <div id="liste_inscrit" ></div>
+
+
+    <script>
+        document.getElementById("inscription").addEventListener("submit", ajax);
+
+        function ajax(e){
+
+            e.preventDefault();
+
+            var file = "ajax.php";
+
+            if(window.XMLHttpRequest){
+
+                var r = new XMLHttpRequest();
+            } else {
+                var r = new ActiveXObject;("MICROSOFT.XMLHTTP");        
+            }
+            var info = document.getElementById("email");
+            var email = info.value;
+
+            var parametres = "email="+email;
+
+            r.open("POST", file, true);
+            r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            r.onreadystatechange = function() {
+
+                  if(r.readyState == 4 && r.status == 200){
+                        console.log(r.responseText)
+                        var liste = JSON.parse(r.responseText);
+
+                        document.getElementById("liste_inscrit").innerHTML = liste.resultat;                              
+                }
+            }
+
+            r.send(parametres);
+        }
+       
+    </script>
+</body>
+</html>

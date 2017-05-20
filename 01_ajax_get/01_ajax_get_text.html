@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ajax get text</title>
+
+    <style>
+        div { width: 50%; margin: 0 auto;}
+        #demo { border: 1px solid; padding: 30px;}
+        div h1 {color: white; padding: 20px; background-color: darkred;}
+    </style>
+</head>
+<body>
+        
+     <div id="titre">
+        <h1>ANCIEN TITRE</h1>
+        <button type="button"  id="action2">Changer titre</button>
+
+    </div>
+    <div>
+        <p id="demo"></p>
+        <button type="button"  id="action">Changer texte</button>
+
+    </div>
+
+    <script>
+    // on recupere  l element qui a l id action pour mettre en lace un evenement, execution d une fonction lors du clic
+    /*
+    les statut de la requete XMLHttpRequest
+    0 => objet cree, demande mon initialisee
+    1 => cmonnexion du serveur etablie
+    2 => demanse recu par le serveut
+    3 => traitement cote  serveur
+    4 =>  demande terminee, la reponse est recue
+
+    les statue http
+    https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP
+
+    */
+    document.getElementById("action").addEventListener("click", changeText);
+
+        function changeText(){
+            var xhttp = new XMLHttpRequest();// instansciation de l 'objet XMLHttpRequest()
+                //verifier l etat de la reponse, si on a recu la reponse on met en place la fonction
+
+                //mise en place d un evenement sur le chgt d etat
+
+                xhttp.onreadystatechange = function(){
+                    console.log(xhttp.readyState);
+                    console.log(xhttp.status);
+                    if(xhttp.readyState == 4 && xhttp.status == 200){
+                        console.log( xhttp.responseText);
+                        document.getElementById("demo").textContent = xhttp.responseText;
+                    }
+                }
+                xhttp.open("GET", "ajax_info_text.txt", true); //prepare la reponse(methode, la page cible, true: asynchrone-false: synchron; true par default)
+                xhttp.send();// envoie la reponse
+        }
+
+        document.getElementById("action2").addEventListener("click", changeTitre);
+
+        function changeTitre(){
+            var xhttp = new XMLHttpRequest();// instansciation de l 'objet XMLHttpRequest()
+                //verifier l etat de la reponse, si on a recu la reponse on met en place la fonction
+
+                //mise en place d un evenement sur le chgt d etat
+
+                xhttp.onreadystatechange = function(){
+                    console.log(xhttp.readyState);
+                    console.log(xhttp.status);
+                    if(xhttp.readyState == 4 && xhttp.status == 200){
+                        console.log( xhttp.responseText);
+                        document.getElementById("titre").innerHTML = xhttp.responseText;
+                    }
+                }
+                xhttp.open("GET", "ajax_info_html.txt", true); //prepare la reponse(methode, la page cible, true: asynchrone-false: synchron; true par default)
+                xhttp.send();// envoie la reponse
+        }
+    </script>
+</body>
+</html>

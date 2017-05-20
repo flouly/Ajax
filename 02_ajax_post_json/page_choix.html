@@ -1,0 +1,60 @@
+<!-- faire une page avec un chmp selct qui permet de choisir un prenom
+mettre en place une rquete ajax quim recupere le  prenom choisi  pu[our la passer dans les parametres et afficher la repnse dans notre page-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <form id="form_choix">
+
+        <label >choisissez un prenom</label>
+    <select  id="choix"> //on peut mettre onchange="ajax()"
+
+        <option value="laura">Laura</option>
+        <option value="thierry">Thierry</option>
+        <option value="thomas">Thomas</option>
+
+    </select>
+    <input type=submit value="Envoyer" >
+
+    </form>
+
+
+    <div id="resultat"></div>
+
+    <script>
+
+        document.getElementById("form_choix").addEventListener("submit", ajax);
+        function ajax(e){
+            e.preventDefault();
+            //alert('ok');
+            var file = "ajax.php";
+            r = new XMLHttpRequest();
+            var choix = document.getElementById("choix");
+            choix = choix.value;
+            //console.log(choix);
+            var parametres = "prenom="+choix;
+             
+             r.open("POST", file, true);
+             r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+             r.onreadystatechange = function(){
+
+                if(r.readyState == 4 && r.status == 200){
+                        console.log(r.responseText)
+                        var obj = JSON.parse(r.responseText); 
+
+                        document.getElementById('resultat').innerHTML = obj.resultat;       
+                }
+             }
+             r.send(parametres);
+        }    
+    </script>
+</body>
+</html>
